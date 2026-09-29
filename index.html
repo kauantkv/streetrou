@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEXORA | Define Your Style</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Tailwind Config for Darker Purple Theme -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                    },
+                    colors: {
+                        // Cores mais escuras solicitadas
+                        brand: {
+                            50: '#f5f3ff',
+                            100: '#ede9fe',
+                            200: '#ddd6fe',
+                            300: '#c4b5fd',
+                            400: '#a78bfa',
+                            500: '#8b5cf6',
+                            600: '#7c3aed',
+                            700: '#6d28d9',
+                            800: '#5b21b6', // Roxo escuro principal
+                            900: '#4c1d95', // Roxo bem escuro
+                            950: '#2e1065',
+                        },
+                        dark: '#0f172a',
+                    },
+                    boxShadow: {
+                        'soft': '0 20px 40px -15px rgba(0,0,0,0.05)',
+                        'glow': '0 0 40px -10px rgba(91, 33, 182, 0.4)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Styles & Utilities */
+        body {
+            background-color: #f8fafc;
+            overflow-x: hidden;
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .text-outline {
+            color: transparent;
+            -webkit-text-stroke: 1px #4c1d95;
+        }
+
+        /* Abstract background shapes */
+        .bg-shape {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.05);
+            z-index: 0;
+        }
+
+        /* Float animation for the star and cards */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        .animate-float {
+            animation: float 4s ease-in-out infinite;
+        }
+        .animate-float-delayed {
+            animation: float 5s ease-in-out infinite 2s;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #6d28d9;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="text-slate-800 antialiased selection:bg-brand-500 selection:text-white">
+
+    <!-- Navigation -->
+    <nav class="w-full max-w-[1400px] mx-auto px-6 py-6 flex items-center justify-between relative z-50">
+        <!-- Left Links -->
+        <div class="hidden lg:flex items-center gap-8 text-sm font-semibold text-slate-800">
+            <a href="#" class="hover:text-brand-600 transition-colors">Shop</a>
+            <a href="#" class="hover:text-brand-600 transition-colors">New In</a>
+            <a href="#" class="hover:text-brand-600 transition-colors">Collections</a>
+            <a href="#" class="hover:text-brand-600 transition-colors">About</a>
+            <a href="#" class="hover:text-brand-600 transition-colors">Contact</a>
+        </div>
+
+        <!-- Mobile Menu Button -->
+        <button class="lg:hidden text-2xl text-slate-800">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+        </button>
+
+        <!-- Logo -->
+        <a href="#" class="text-2xl md:text-3xl font-black tracking-tighter text-dark uppercase absolute left-1/2 -translate-x-1/2">
+            NEXORA
+        </a>
+
+        <!-- Right Actions -->
+        <div class="flex items-center gap-4">
+            <button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-slate-100 transition-colors" aria-label="Search">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+            </button>
+            
+            <div class="hidden sm:block w-9 h-9 rounded-full overflow-hidden border-2 border-brand-200 cursor-pointer hover:border-brand-500 transition-colors">
+                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80" alt="User Profile" class="w-full h-full object-cover">
+            </div>
+
+            <button id="cartBtn" class="flex items-center gap-2 px-4 py-2 border border-slate-200 rounded-full hover:border-brand-500 hover:text-brand-600 transition-all shadow-sm">
+                <svg class="w-5 h-5 text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                <span class="text-sm font-semibold"><span id="cartCount">1</span> item</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Hero Section -->
+    <main class="w-full max-w-[1400px] mx-auto px-4 sm:px-6 pb-20 pt-4 relative">
+        
+        <!-- Large Background Typography -->
+        <div class="flex flex-col md:flex-row justify-between items-end md:items-center px-4 md:px-12 mb-8 relative z-10">
+            <div class="text-left">
+                <h1 class="text-4xl md:text-5xl lg:text-[4rem] font-bold leading-none text-slate-800">
+                    Define Your<br>
+                    <span class="text-brand-700 text-6xl md:text-7xl lg:text-[6rem] font-black uppercase tracking-tight">STYLE</span>
+                </h1>
+            </div>
+            
+            <div class="text-right mt-4 md:mt-0 relative">
+                <!-- Decorative Star -->
+                <svg class="absolute -top-8 -left-12 w-12 h-12 text-brand-500 animate-float" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z"/>
+                </svg>
+                
+                <h1 class="text-4xl md:text-5xl lg:text-[4rem] font-bold leading-none text-slate-800">
+                    Own Your<br>
+                    <span class="text-brand-700 text-6xl md:text-7xl lg:text-[6rem] font-black uppercase tracking-tight">WORLD</span>
+                </h1>
+            </div>
+        </div>
+
+        <!-- Deep Purple Rounded Container -->
+        <!-- Aqui usamos bg-brand-800 e bg-brand-900 para um tom "um pouco mais escuro" -->
+        <div class="relative bg-gradient-to-br from-brand-800 to-brand-900 rounded-[2.5rem] lg:rounded-[3.5rem] w-full min-h-[600px] overflow-hidden flex flex-col lg:flex-row shadow-glow">
+            
+            <!-- Abstract background shapes inside the container -->
+            <div class="bg-shape w-[500px] h-[500px] -top-32 -left-32"></div>
+            <div class="bg-shape w-[300px] h-[300px] bottom-10 right-20 opacity-50"></div>
+            <div class="bg-shape w-[600px] h-[200px] top-1/2 left-1/4 -rotate-45 opacity-30 border border-white/10 bg-transparent rounded-full"></div>
+
+            <!-- Left Content Block -->
+            <div class="relative z-20 flex-1 p-8 lg:p-16 flex flex-col justify-center text-white">
+                
+                <div class="inline-flex items-center gap-2 text-brand-200 text-sm font-semibold uppercase tracking-wider mb-6">
+                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z"/></svg>
+                    New Collection
+                </div>
+                
+                <h2 class="text-4xl md:text-5xl font-bold leading-[1.1] mb-6">
+                    Where Comfort<br>Meets Confidence
+                </h2>
+                
+                <p class="text-brand-100 text-base md:text-lg max-w-sm mb-10 opacity-90 leading-relaxed">
+                    Elevate your everyday look with pieces that speak you. Darker aesthetics, bolder moves.
+                </p>
+                
+                <button onclick="exploreAction()" class="group inline-flex items-center justify-center gap-3 bg-dark text-white font-semibold rounded-full px-8 py-4 w-max hover:bg-black transition-all hover:scale-105 shadow-xl">
+                    Explore Now
+                    <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                </button>
+
+                <!-- Social Proof Badge -->
+                <div class="mt-12 glass-panel rounded-full p-2 pr-6 inline-flex items-center gap-4 w-max">
+                    <div class="flex -space-x-3">
+                        <img class="w-10 h-10 rounded-full border-2 border-brand-800 object-cover" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=100&q=80" alt="User">
+                        <img class="w-10 h-10 rounded-full border-2 border-brand-800 object-cover" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=100&q=80" alt="User">
+                        <img class="w-10 h-10 rounded-full border-2 border-brand-800 object-cover" src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=100&q=80" alt="User">
+                    </div>
+                    <div>
+                        <p class="text-sm font-semibold text-white">Loved by 20K+</p>
+                        <p class="text-xs text-brand-200">Trendsetters <span class="text-red-400">❤</span></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Center Model Image -->
+            <!-- Note: Using absolute positioning to break out of the container on large screens -->
+            <div class="lg:absolute lg:bottom-0 lg:left-1/2 lg:-translate-x-1/2 lg:w-[45%] lg:h-[115%] z-10 flex justify-center items-end pointer-events-none mt-10 lg:mt-0">
+                <!-- Using a masked image to simulate a cutout without needing a transparent PNG. We use rounded top corners -->
+                <div class="relative w-full max-w-[400px] h-[500px] lg:h-[100%] rounded-t-[100px] lg:rounded-t-[200px] overflow-hidden border-b-0 shadow-2xl pointer-events-auto group">
+                    <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=800&q=80" alt="Fashion Model" class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700">
+                    <!-- Text Overlay on Shirt (Simulated graphic tee design) -->
+                    <div class="absolute inset-0 flex flex-col items-center justify-center opacity-80 mix-blend-overlay">
+                        <span class="text-4xl font-black text-white tracking-widest uppercase rotate-12 drop-shadow-md">NEXORA</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Content Block -->
+            <div class="relative z-20 flex-1 p-8 lg:p-16 flex flex-col justify-center items-center lg:items-end text-white">
+                
+                <!-- Feature Icons -->
+                <div class="grid grid-cols-3 gap-6 mb-12 w-full max-w-sm text-center">
+                    <div class="flex flex-col items-center gap-2">
+                        <div class="w-12 h-12 rounded-2xl glass-panel flex items-center justify-center mb-1">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
+                        </div>
+                        <span class="text-xs font-medium text-brand-100">Premium<br>Quality</span>
+                    </div>
+                    <div class="flex flex-col items-center gap-2">
+                        <div class="w-12 h-12 rounded-2xl glass-panel flex items-center justify-center mb-1">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                        </div>
+                        <span class="text-xs font-medium text-brand-100">Sustainable<br>Fashion</span>
+                    </div>
+                    <div class="flex flex-col items-center gap-2">
+                        <div class="w-12 h-12 rounded-2xl glass-panel flex items-center justify-center mb-1">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"></path></svg>
+                        </div>
+                        <span class="text-xs font-medium text-brand-100">Limited<br>Edition</span>
+                    </div>
+                </div>
+
+                <!-- Featured Product Card -->
+                <div class="bg-white rounded-3xl p-4 w-full max-w-[260px] text-slate-800 shadow-2xl animate-float-delayed">
+                    <div class="text-center mb-2">
+                        <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Featured Look</span>
+                    </div>
+                    <div class="w-full h-48 rounded-2xl overflow-hidden mb-4 bg-slate-100 relative group cursor-pointer">
+                        <img src="https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=600&q=80" alt="Graffiti Hoodie" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-brand-900/20 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    </div>
+                    
+                    <div class="text-center mb-4">
+                        <h3 class="font-bold text-lg leading-tight">Graffiti Hoodie</h3>
+                        <p class="text-xs text-slate-500 mt-1">Streetwear Essential</p>
+                    </div>
+
+                    <button onclick="addToCart()" class="w-full flex items-center justify-center gap-2 bg-brand-600 hover:bg-brand-700 text-white py-3 rounded-full font-semibold transition-colors shadow-lg shadow-brand-500/30">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                        $79.99
+                    </button>
+                </div>
+                
+            </div>
+        </div>
+    </main>
+
+    <!-- Scripts for interactivity -->
+    <script>
+        // Simple Cart Counter Logic
+        let cartItems = 1;
+        const cartCountElement = document.getElementById('cartCount');
+        const cartBtn = document.getElementById('cartBtn');
+
+        function addToCart() {
+            cartItems++;
+            
+            // Animate button bounce
+            cartBtn.classList.add('scale-95');
+            setTimeout(() => {
+                cartBtn.classList.remove('scale-95');
+                // Update number
+                cartCountElement.textContent = cartItems;
+                cartCountElement.classList.add('text-brand-600', 'scale-125', 'inline-block');
+                
+                // Add tiny visual feedback
+                const itemLabel = cartItems === 1 ? 'item' : 'items';
+                cartBtn.innerHTML = `
+                    <svg class="w-5 h-5 text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                    <span class="text-sm font-semibold text-brand-600"><span id="cartCount">${cartItems}</span> ${itemLabel}</span>
+                `;
+                cartBtn.classList.add('border-brand-500', 'bg-brand-50');
+            }, 150);
+        }
+
+        // Explore Now Action
+        function exploreAction() {
+            window.scrollTo({
+                top: window.innerHeight,
+                behavior: 'smooth'
+            });
+        }
+    </script>
+</body>
+</html>
